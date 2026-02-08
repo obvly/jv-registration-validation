@@ -13,6 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class RegistrationServiceImplTest {
+    private static final String VALID_LOGIN = "valid_login";
+    private static final String VALID_PASSWORD = "valid_password";
+    private static final int VALID_AGE = 20;
+    private static final int ADULT_AGE = 18;
     private RegistrationService registrationService;
 
     @BeforeEach
@@ -27,7 +31,18 @@ public class RegistrationServiceImplTest {
         User result = registrationService.register(user);
 
         assertNotNull(result);
-        assertEquals(user.getLogin(), result.getLogin());
+        assertEquals(user, result);
+        assertEquals(user, Storage.people.get(0));
+    }
+
+    @Test
+    void register_age18_ok() {
+        User user = createValidUser();
+        user.setAge(ADULT_AGE);
+        User result = registrationService.register(user);
+
+        assertNotNull(result);
+        assertEquals(user, result);
         assertEquals(user, Storage.people.get(0));
     }
 
@@ -95,13 +110,6 @@ public class RegistrationServiceImplTest {
     }
 
     @Test
-    void register_threeCharPassword_notOk() {
-        User user = createValidUser();
-        user.setPassword("123");
-        assertThrows(RegistrationException.class, () -> registrationService.register(user));
-    }
-
-    @Test
     void register_fiveCharPassword_notOk() {
         User user = createValidUser();
         user.setPassword("12345");
@@ -112,21 +120,29 @@ public class RegistrationServiceImplTest {
     void register_sixCharPassword_Ok() {
         User user = createValidUser();
         user.setPassword("123456");
-        assertNotNull(registrationService.register(user));
+        User result = registrationService.register(user);
+
+        assertNotNull(result);
+        assertEquals(user, result);
+        assertEquals(user, Storage.people.get(0));
     }
 
     @Test
     void register_eightCharPassword_Ok() {
         User user = createValidUser();
         user.setPassword("12345678");
-        assertNotNull(registrationService.register(user));
+        User result = registrationService.register(user);
+
+        assertNotNull(result);
+        assertEquals(user, result);
+        assertEquals(user, Storage.people.get(0));
     }
 
     private User createValidUser() {
         User user = new User();
-        user.setLogin("valid_login");
-        user.setPassword("valid_password");
-        user.setAge(20);
+        user.setLogin(VALID_LOGIN);
+        user.setPassword(VALID_PASSWORD);
+        user.setAge(VALID_AGE);
         return user;
     }
 }

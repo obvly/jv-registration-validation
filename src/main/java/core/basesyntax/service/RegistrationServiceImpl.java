@@ -45,7 +45,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             throw new RegistrationException("Login cannot be null");
         }
         if (login.length() < MIN_LOGIN_LENGTH) {
-            throw new RegistrationException("Login is too short. Min length: "
+            throw new RegistrationException("Login too short. Min length: "
                     + MIN_LOGIN_LENGTH + ", actual: " + login.length());
         }
     }
@@ -55,7 +55,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             throw new RegistrationException("Password cannot be null");
         }
         if (password.length() < MIN_PASSWORD_LENGTH) {
-            throw new RegistrationException("Password is too short. Min length: "
+            throw new RegistrationException("Password too short. Min length: "
                     + MIN_PASSWORD_LENGTH + ", actual: " + password.length());
         }
     }
